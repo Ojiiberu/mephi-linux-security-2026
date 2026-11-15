@@ -1,0 +1,88 @@
+  398  sudo apt update
+  399  sudo apt install -y libcap2-bin git gh
+  400  sudo groupadd students 
+  401  sudo useradd -m -u 1234 -G students -s /bin/bash user1 
+  402  sudo passwd user1
+  403  sudo change -M 90 user1
+  404  sudo chage -M 90 user1
+  405  id user1
+  406  chage -l user1
+  407  sudo chage -l user1
+  408  mkdir /mephiSEC
+  409  sudo mkdir /mephiSEC
+  410  cd /mephiSEC
+  411  sudo find / -perm -4000 -type f > suid_files.out
+  412  sudo chown -R a1:a1 /mephiSEC
+  413  ls -Id /mephiSEC
+  414  ls -ld /mephiSEC
+  415  sudo find / -perm -4000 -type f > suid_files.out
+  416  cat suid_files.out
+  417  sudo find / -perm -4000 -type f > suid_files.out
+  418  cat suid_files.out
+  419  wc -l suid_files.out
+  420  ps -eo euid,ruid,pid,ppid,user,comm,args | awk 'NR==1 || ($1==0 && $2>=1000)' > procs_euid0.out 
+  421  cat procs_euid.out
+  422  cat procs_euid0.out
+  423  sudo cp /usr/bin/cat /home/user1/mycat
+  424  sudo chown root:root /home/user1/mycat
+  425  sudo chmod u+s /home/user1/mycat
+  426  ls -l /home/user1/mycat
+  427  sudo ls -l /home/user1/mycat
+  428  su - user1 -c 'cat /etc/shadow'
+  429  su - user1 -c '/home/user1/mycat /etc/shadow | head -3'
+  430  sudo cp /usr/bin/chown /home/user1/mychown
+  431  sudo chown user1:user1 /home/user1/mychown
+  432  sudo setcap cap_chown+ep /home/user1/mychown
+  433  getcap /home/user1/mychown
+  434  sudo getcap /home/user1/mychown
+  435  su - user1 -c 'touch ~/t.txt; chown root ~/t.txt'
+  436  su - user1 -c '~/mychown root ~/t.txt; ls -l ~/t.txt'
+  437  sudo visudo
+  438  sudo visudo -c
+  439  sudo -l -U user1
+  440  su - user1 -c 'sudo date -s "$(date)"'
+  441  su --pty - user1 -c 'sudo date -s "$(date)"'
+  442  echo M265199
+  443  ls /home/Pictures/Screenshots/
+  444  ls /home/a1/Pictures/Screenshots/
+  445  mv /home/a1/Pictures/Screenshots/Screenshot from 2026-11-15 14-05-18.png /mephiSEC/mephi-screenshot.png
+  446  mv /home/a1/Pictures/Screenshots/'Screenshot from 2026-11-15 14-05-18.png' /mephiSEC/mephi-screenshot.png
+  447  history > history.out
+  448  stat /home/user1 > stat.out
+  449  stat /home/user1/mycat >> stat.out
+  450  sudo stat /home/user1/mycat >> stat.out
+  451  sudo stat /home/user1/mychown >> stat.out
+  452  getcap /home/user1/mychown > getcap.out 
+  453  sudo getcap /home/user1/mychown > getcap.out 
+  454  cat history.out
+  455  awk '$1>=398' history.out > history_clean.out
+  456  mv history_clean.out history.out 
+  457  head -3 history.out
+  458  ls -l
+  459  cat procs_euid0.out
+  460  cat stat.out getcap.out
+  461  stat /home/user1 > stat.out
+  462  sudo stat /home/user1/mycat >> stat.out
+  463  sudo stat /home/user1/mychown >> stat.out
+  464  sudo getcap /home/user1/mychown > getcap.out
+  465  cat stat.out getcap.out
+  466  sudo cp /etc/passwd /etc/group /etc/sudoers .
+  467  sudo awk -F: '$1=="user1" || $2=="*" || $2=="!*"' /etc/shadow > shadow
+  468  cat shadow 
+  469  grep -c '\$y\$' shadow
+  470  sudo chown -R a1:a1 /mephiSEC
+  471  cat > README.md << 'EOF'
+M265199
+Файл shadow очищен от хешей реальных пользователей; сохранена строка user1 и системные учётки без пароля.
+| Раздел | Что сделано | Файл |
+|---|---|---|
+| 1 | Пользователь user1 (UID 1234), группа students, смена пароля каждые 90 дней | passwd, shadow, group |
+| 2.1 | Поиск файлов с битом SUID | suid_files.out |
+| 2.2 | Процессы с EUID=0 и обычным RUID | procs_euid0.out |
+| 3 | set-UID на копии cat | stat.out |
+| 4 | capabilities (cap_chown) на копии chown | getcap.out, stat.out |
+| 5 | sudo: user1 может менять время | sudoers |
+| 6 | Скриншот и история команд | mephi-screenshot.png, history.out |
+EOF
+  472  cat README.md
+  473  history | awk '$1>=398' > history.out 
